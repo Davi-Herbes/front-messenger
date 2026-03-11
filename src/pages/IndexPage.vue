@@ -1,43 +1,52 @@
+<script setup lang="ts">
+import Conversations from "src/components/conversations/Conversations.vue";
+import Profile from "src/components/Profile.vue";
+import Search from "src/components/search/Search.vue";
+import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
+const route = useRoute();
+const router = useRouter();
+
+// import { QTabs, QTab, QTabPanel } from "quasar";
+
+const tab = ref("conversations");
+</script>
+
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
-  </q-page>
+  <div class="fit row main-container">
+    <div class="column col full-height rounded-borders overflow-hidden">
+      <q-tabs class="bg-white col-auto" no-caps align="justify" v-model="tab" expand>
+        <q-tab class="col-4" name="conversations" label="Conversas"></q-tab>
+        <q-tab class="col-4" name="search" label="Buscar"></q-tab>
+        <q-tab class="col-4" name="profile" label="Perfil"></q-tab>
+      </q-tabs>
+      <q-tab-panels class="col" v-model="tab" animated expand>
+        <q-tab-panel name="conversations">
+          <Conversations />
+        </q-tab-panel>
+        <q-tab-panel name="search">
+          <Search />
+        </q-tab-panel>
+        <q-tab-panel name="profile">
+          <Profile />
+        </q-tab-panel>
+      </q-tab-panels>
+    </div>
+    <div class="bg-white col rounded-borders">
+      <q-chat-message :text="['OPA']" sent> </q-chat-message>
+    </div>
+  </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import type { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
+<style>
+.main-container {
+  padding: 5vh;
+  gap: 4vw;
+  background: rgb(225 236 237);
+}
 
-const todos = ref<Todo[]>([
-  {
-    id: 1,
-    content: 'ct1',
-  },
-  {
-    id: 2,
-    content: 'ct2',
-  },
-  {
-    id: 3,
-    content: 'ct3',
-  },
-  {
-    id: 4,
-    content: 'ct4',
-  },
-  {
-    id: 5,
-    content: 'ct5',
-  },
-]);
-
-const meta = ref<Meta>({
-  totalCount: 1200,
-});
-</script>
+.q-tab-panel {
+  padding: 0;
+}
+</style>
