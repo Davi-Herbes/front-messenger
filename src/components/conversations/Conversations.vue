@@ -12,7 +12,7 @@ import Conversation from "./Conversation.vue";
     />
     <Conversation
       last-msg="Opa, bão?"
-      class=""
+      class="selected"
       conversation-name="Amigo tal"
       last-msg-time="22:24"
     />
@@ -39,6 +39,11 @@ import Conversation from "./Conversation.vue";
 
 .conversation.unread {
   color: var(--q-primary);
+  background: var(--q-bg-3);
+}
+
+.conversation.selected {
+  color: var(--q-semi-dark);
   background: var(--q-bg-1);
 }
 </style>

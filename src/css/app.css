@@ -1,1 +1,14 @@
 /* app global css */
+
+.semi-dark {
+  background-color: rgb(33, 78, 98);
+}
+.bg-1 {
+  background-color: rgb(225, 236, 237);
+}
+.bg-2 {
+  background-color: rgb(225 236 237);
+}
+.bg-3 {
+  background-color: rgb(232 242 245);
+}

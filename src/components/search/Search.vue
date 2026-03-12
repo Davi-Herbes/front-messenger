@@ -1,3 +1,13 @@
+<script setup lang="ts">
+import SearchForm from "./SearchForm.vue";
+import SearchResult from "./SearchResult.vue";
+</script>
+
 <template>
-  <h1>Search</h1>
+  <div class="search-container fit column">
+    <SearchForm class="col-auto" />
+    <SearchResult class="col" />
+  </div>
 </template>
+
+<style></style>

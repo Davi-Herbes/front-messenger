@@ -89,8 +89,10 @@ export default defineConfig((/* ctx */) => {
         brand: {
           primary: "rgb(66, 147, 185)",
           dark: "rgb(18, 44, 55)",
-          "bg-1": "rgba(225, 236, 237, 0.67)",
+          "semi-dark": "rgb(33, 78, 98)",
+          "bg-1": "rgba(184, 230, 234, 0.67)",
           "bg-2": "rgb(225 236 237)",
+          "bg-3": "rgb(232 242 245)",
         },
       },
 
