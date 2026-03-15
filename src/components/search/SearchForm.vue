@@ -7,7 +7,7 @@ const searchInputValue = ref("");
 const form = ref<QForm | null>(null);
 
 const handleSubmit = async () => {
-  form.value?.reset();
+  form.value?.validate();
 };
 </script>
 
@@ -20,8 +20,9 @@ const handleSubmit = async () => {
       :rules="[stringRule, maxLengthRule]"
       :error="false"
       class="col q-pa-none"
+      lazy-rules
     >
     </q-input>
-    <q-btn label="Enviar" no-caps class="col-auto bg-1" unelevated outline type="reset"></q-btn>
+    <q-btn label="Enviar" no-caps class="col-auto bg-1" unelevated outline type="submit"></q-btn>
   </q-form>
 </template>
