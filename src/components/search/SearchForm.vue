@@ -6,8 +6,8 @@ import { ref } from "vue";
 const searchInputValue = ref("");
 const form = ref<QForm | null>(null);
 
-const handleSubmit = async () => {
-  form.value?.validate();
+const handleSubmit = () => {
+  // form.value?.validate();
 };
 </script>
 

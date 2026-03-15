@@ -9,6 +9,12 @@ export const useUserStore = defineStore("user", {
   }),
 
   actions: {
+    clearState() {
+      this.name = "";
+      this.email = "";
+      this.isLoggedIn = false;
+    },
+
     async registerUser(name: string, email: string): Promise<boolean> {
       try {
         const { status } = await api.post("/user", {
@@ -18,6 +24,7 @@ export const useUserStore = defineStore("user", {
 
         return status === 200;
       } catch (e) {
+        this.clearState();
         return false;
       }
     },
@@ -32,6 +39,7 @@ export const useUserStore = defineStore("user", {
         const { status } = await api.post("/user/confirm", { code, password });
 
         if (status !== 200) {
+          this.clearState();
           return false;
         }
 
@@ -41,24 +49,30 @@ export const useUserStore = defineStore("user", {
 
         return true;
       } catch (e) {
+        this.clearState();
         return false;
       }
     },
 
     async login(email: string, password: string): Promise<boolean> {
       try {
-        const { status, data } = await api.post("/auth/login", { email, password });
+        const {
+          status,
+          data: { user },
+        } = await api.post("/auth/login", { email, password });
 
-        if (typeof data.name !== "string" || !data.name || status !== 200) {
+        if (status !== 200 || typeof user.name !== "string" || !user.name) {
           return false;
         }
 
-        this.name = data.name;
+        this.name = user.name;
         this.email = email;
         this.isLoggedIn = true;
 
         return true;
       } catch (e) {
+        console.log(e);
+        this.clearState();
         return false;
       }
     },
@@ -66,7 +80,7 @@ export const useUserStore = defineStore("user", {
     async logout(): Promise<boolean> {
       const { status } = await api.get("/auth/logout");
 
-      this.isLoggedIn = false;
+      this.clearState();
       return status === 200;
     },
   },
