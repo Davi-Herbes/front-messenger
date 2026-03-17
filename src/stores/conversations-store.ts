@@ -4,19 +4,21 @@ import { Ref, ref } from "vue";
 import z from "zod";
 
 const MessageSchema = z.object({
-  id: z.string(),
   text: z.string(),
-  senderId: z.string(),
+  createdAt: z.string(),
 });
-
-const MessagesSchema = z.array(MessageSchema);
 
 const ConversationSchema = z.object({
   id: z.string(),
   participants: z.array(
-    z.object({ participant: z.object({ name: z.string(), email: z.string() }) }),
+    z.object({
+      participant: z.object({
+        name: z.string(),
+        email: z.string(),
+        messages: z.array(MessageSchema).default([]),
+      }),
+    }),
   ),
-  messages: z.array(MessageSchema),
 });
 
 const ConversationsSchema = z.array(ConversationSchema);
@@ -30,24 +32,28 @@ export const useConversationsStore = defineStore("conversations", () => {
     try {
       const { data } = await api.get(`/conversations/${userId}`);
 
-      conversations.value = ConversationsSchema.parse(data);
+      console.log(data);
+
+      const parsed = ConversationsSchema.parse(data);
+      conversations.value = parsed;
 
       return true;
     } catch (e) {
+      console.log(e);
       return false;
     }
   };
 
-  const loadMessages = async (conversation: Conversation) => {
-    try {
-      const { data } = await api.get(`/messages/${conversation.id}`);
+  // const loadMessages = async (conversation: Conversation) => {
+  //   try {
+  //     const { data } = await api.get(`/messages/${conversation.id}`);
 
-      conversation.messages = MessagesSchema.parse(data);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
+  //     conversation.participants[0]?.participant.messages = MessagesSchema.parse(data);
+  //     return true;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // };
 
-  return { conversations, loadConversations, loadMessages };
+  return { conversations, loadConversations };
 });

@@ -3,6 +3,7 @@ import { api } from "src/boot/axios";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
+    id: "",
     name: "",
     email: "",
     isLoggedIn: false,
@@ -10,6 +11,7 @@ export const useUserStore = defineStore("user", {
 
   actions: {
     clearState() {
+      this.id = "";
       this.name = "";
       this.email = "";
       this.isLoggedIn = false;
@@ -36,13 +38,17 @@ export const useUserStore = defineStore("user", {
       password: string,
     ): Promise<boolean> {
       try {
-        const { status } = await api.post("/user/confirm", { code, password });
+        const {
+          status,
+          data: { userId },
+        } = await api.post("/user/confirm", { code, password });
 
-        if (status !== 200) {
+        if (status !== 200 || !userId || typeof userId !== "string") {
           this.clearState();
           return false;
         }
 
+        this.id = userId;
         this.name = name;
         this.email = email;
         this.isLoggedIn = true;
@@ -61,10 +67,17 @@ export const useUserStore = defineStore("user", {
           data: { user },
         } = await api.post("/auth/login", { email, password });
 
-        if (status !== 200 || typeof user.name !== "string" || !user.name) {
+        if (
+          status !== 200 ||
+          typeof user.name !== "string" ||
+          !user.name ||
+          !user.id ||
+          typeof user.id !== "string"
+        ) {
           return false;
         }
 
+        this.id = user.id;
         this.name = user.name;
         this.email = email;
         this.isLoggedIn = true;
