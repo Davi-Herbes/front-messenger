@@ -15,6 +15,7 @@ export const useSearchStore = defineStore("search", () => {
   const $q = useQuasar();
 
   const searchQuery = async (query: string) => {
+    $q.loading.show();
     try {
       const { status, data } = await api.get(`/user/search/${query}`);
 
@@ -32,6 +33,7 @@ export const useSearchStore = defineStore("search", () => {
       });
       console.log(e);
     }
+    $q.loading.hide();
   };
 
   return { searchResults, searchQuery };
