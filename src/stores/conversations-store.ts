@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
 import { Ref, ref } from "vue";
@@ -5,7 +6,7 @@ import z from "zod";
 
 const MessageSchema = z.object({
   text: z.string(),
-  createdAt: z.string(),
+  createdAt: z.coerce.date(),
 });
 
 const ConversationSchema = z.object({
@@ -44,16 +45,18 @@ export const useConversationsStore = defineStore("conversations", () => {
     }
   };
 
-  // const loadMessages = async (conversation: Conversation) => {
-  //   try {
-  //     const { data } = await api.get(`/messages/${conversation.id}`);
+  const addUser = async (firstUserId: string, secondUserId: string) => {
+    try {
+      const response = await api.post(`/conversations/addUser`, { firstUserId, secondUserId });
 
-  //     conversation.participants[0]?.participant.messages = MessagesSchema.parse(data);
-  //     return true;
-  //   } catch (e) {
-  //     return false;
-  //   }
-  // };
+      return response;
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        return { status: e.status };
+      }
+      return { status: 400 };
+    }
+  };
 
-  return { conversations, loadConversations };
+  return { conversations, loadConversations, addUser };
 });

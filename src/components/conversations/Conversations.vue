@@ -21,27 +21,9 @@ onMounted(async () => {
     <Conversation
       v-for="conversation in conversations"
       :key="conversation.id"
-      :conversation-name="conversation.participants[0]?.participant.name || 'Erro'"
-      :last-msg="conversation.participants[0]?.participant.messages[0]?.text || 'Erro'"
-      :last-msg-time="conversation.participants[0]?.participant.messages[0]?.createdAt || 'Erro'"
-    />
-    <Conversation
-      last-msg="Opa, bão?"
-      class="selected"
-      conversation-name="Amigo tal"
-      last-msg-time="22:24"
-    />
-    <Conversation
-      last-msg="Opa, bão?"
-      class=""
-      conversation-name="Amigo tal"
-      last-msg-time="22:24"
-    />
-    <Conversation
-      last-msg="Opa, bão?"
-      class="unread"
-      conversation-name="Amigo tal"
-      last-msg-time="22:24"
+      :conversation-name="conversation.participants[0]?.participant.name || '-'"
+      :last-msg="conversation.participants[0]?.participant.messages[0]?.text || '-'"
+      :last-msg-time="conversation.participants[0]?.participant.messages[0]?.createdAt"
     />
   </div>
 </template>
@@ -50,6 +32,11 @@ onMounted(async () => {
 .conversation {
   height: 15vh;
   border-bottom: var(--q-bg-2) 2px solid;
+  background: #fff;
+}
+
+.conversation:hover {
+  filter: brightness(0.95);
 }
 
 .conversation.unread {

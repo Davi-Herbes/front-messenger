@@ -4,15 +4,14 @@ import { maxLengthRule, stringRule } from "../../rules/_rules";
 import { ref } from "vue";
 
 const searchInputValue = ref("");
-const form = ref<QForm | null>(null);
-
-const handleSubmit = () => {
-  // form.value?.validate();
-};
 </script>
 
 <template>
-  <q-form ref="form" action="/" @submit.prevent="handleSubmit" class="q-pa-lg row q-gutter-md">
+  <q-form
+    action="/"
+    @submit.prevent="$emit('search', searchInputValue)"
+    class="q-pa-lg row q-gutter-md"
+  >
     <q-input
       v-model="searchInputValue"
       outlined

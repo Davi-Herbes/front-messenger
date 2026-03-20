@@ -8,6 +8,7 @@ export const useUserStore = defineStore("user", {
     email: "",
     isLoggedIn: false,
   }),
+  persist: true,
 
   actions: {
     clearState() {
