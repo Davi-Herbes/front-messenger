@@ -1,8 +1,5 @@
 import { defineStore } from "pinia";
 import { api } from "src/boot/axios";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
 
 export const useUserStore = defineStore("user", {
   state: () => ({
@@ -88,7 +85,6 @@ export const useUserStore = defineStore("user", {
 
         return true;
       } catch (e) {
-        console.log(e);
         this.clearState();
         return false;
       }
@@ -98,7 +94,7 @@ export const useUserStore = defineStore("user", {
       const { status } = await api.get("/auth/logout");
 
       this.clearState();
-      await router.push("login");
+      await this.router.push("login");
     },
   },
 });

@@ -21,9 +21,10 @@ onMounted(async () => {
     <Conversation
       v-for="conversation in conversations"
       :key="conversation.id"
-      :conversation-name="conversation.participants[0]?.participant.name || '-'"
-      :last-msg="conversation.participants[0]?.participant.messages[0]?.text || '-'"
-      :last-msg-time="conversation.participants[0]?.participant.messages[0]?.createdAt"
+      :conversation
+      :last-msg="conversation.messages[0]?.text || '-'"
+      :last-msg-time="conversation.messages[0]?.createdAt"
+      @click="conversationsStore.changeCurrentConversation(conversation)"
     />
   </div>
 </template>
@@ -42,6 +43,10 @@ onMounted(async () => {
 .conversation.unread {
   color: var(--q-primary);
   background: var(--q-bg-3);
+}
+
+.conversation-pic img {
+  border-radius: 50%;
 }
 
 .conversation.selected {

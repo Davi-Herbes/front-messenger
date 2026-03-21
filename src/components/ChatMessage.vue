@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 
-const { sended } = defineProps<{ sended: boolean }>();
+const { sended } = defineProps<{ sended?: boolean }>();
 
 const sendedClass = computed(() => {
   return sended ? "sended" : "received";
