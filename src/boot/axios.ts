@@ -15,7 +15,7 @@ declare module "vue" {
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({
-  baseURL: process.env.API_URL || "http://localhost:3000",
+  baseURL: process.env.API_URL || "https://back-messenger-production-f792.up.railway.app/",
   withCredentials: true,
 });
 
